@@ -6,5 +6,5 @@ require('./node/model.js');
 
 module.exports = function(app) {
     // Require routes using this app as base point
-    require('./node/routes.js')(app);
+    require('./user/routes.js')(app);
 };
