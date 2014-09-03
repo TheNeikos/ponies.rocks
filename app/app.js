@@ -3,6 +3,8 @@ var app = express();
 
 app.engine('html', require('ejs').renderFile);
 
+app.use('/public/', express.static(__dirname + '/public'));
+
 // execute the return value of require with app as argument
 require('./db/init.js')(app);
 
