@@ -4,7 +4,7 @@ var app = express();
 // execute the return value of require with app as argument
 require('./db/init.js')(app);
 
-require('./lib/includes.js')(app);
+// require('./lib/includes.js')(app);
 
 app.get('/', function(req, res) {
     res.send('hello world');
