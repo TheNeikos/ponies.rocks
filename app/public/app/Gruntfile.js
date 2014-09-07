@@ -1,7 +1,5 @@
 module.exports = function(grunt) {
 
-  grunt.file.setBase(process.cwd(), '../../');
-
   grunt.initConfig({
     pkg: {
         name: 'ponies-rocks'
@@ -11,8 +9,8 @@ module.exports = function(grunt) {
         separator: ';'
       },
       dist: {
-        src: ['src/**/*.js'],
-        dest: 'public/dist/<%= pkg.name %>.js'
+        src: ['vendor/*.js','src/**/*.js', 'templates.js'],
+        dest: '../dist/<%= pkg.name %>.js'
       }
     },
     uglify: {
@@ -21,16 +19,26 @@ module.exports = function(grunt) {
       },
       dist: {
         files: {
-          'public/dist/<%= pkg.name %>.min.js': ['<%= concat.dist.dest %>']
+          '../dist/<%= pkg.name %>.min.js': ['<%= concat.dist.dest %>']
         }
       }
     },
     qunit: {
-      files: ['public/app/test/**/*.html']
+      files: ['test/**/*.html']
     },
     watch: {
-      files: ['<%= concat.dist.src[0] %>'],
+      files: ['src/**/*.js'],
       tasks: ['concat']
+    },
+    ngtemplates: {
+        'ponies.rocks': {
+            cwd: 'src',
+            src: '**.html',
+            dest: 'templates.js',
+            options: {
+                url: function(url) { return url.replace('.html', ''); }
+            }
+        }
     }
   });
 
@@ -39,7 +47,8 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-qunit');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-angular-templates');
 
-  grunt.registerTask('default', ['qunit', 'concat', 'uglify']);
+  grunt.registerTask('default', ['qunit', 'ngtemplates', 'concat', 'uglify']);
 
 };
