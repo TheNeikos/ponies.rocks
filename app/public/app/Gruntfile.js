@@ -9,7 +9,7 @@ module.exports = function(grunt) {
         separator: ';'
       },
       dist: {
-        src: ['vendor/*.js','src/**/*.js'],
+        src: ['vendor/*.js','src/**/*.js', 'templates.js'],
         dest: '../dist/<%= pkg.name %>.js'
       }
     },
@@ -31,10 +31,13 @@ module.exports = function(grunt) {
       tasks: ['concat']
     },
     ngtemplates: {
-        'ponies.rocks.templates': {
+        'ponies.rocks': {
             cwd: 'src',
             src: '**.html',
-            dest: 'templates.js'
+            dest: 'templates.js',
+            options: {
+                url: function(url) { return url.replace('.html', ''); }
+            }
         }
     }
   });
